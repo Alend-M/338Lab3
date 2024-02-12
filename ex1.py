@@ -15,7 +15,7 @@ def merge(arr, low, mid, high):
     i = 0     
     j = 0     
     k = low   
-
+    
     while i < arrayLengthL and j < arrayLengthR:
         if left[i] <= right[j]:
             arr[k] = left[i]
