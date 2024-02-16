@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import random
 
 
 
@@ -28,12 +29,14 @@ def bubble_sort(arr):
 #increasing input lengths, don't go passed "small" number of inputs
 # but wait for maryam to figure out what small is
 all_arrays = [
-[4, 3],
-[4,10,1,6],
-[20,54,9,7,12,23],
-[5,15,20,24,32, 16,7,28,4,1],
-[6,66,3,82,10, 20,11,5,34,2, 22,55,11,77,33],
-[2,3,6,22,97, 10,4,15,13,81, 22,55,11,77,33, 43,55,50,31,32]]
+[random.randint(0, 1000) for _ in range(5)],
+[random.randint(0, 1000) for _ in range(10)],
+[random.randint(0, 1000) for _ in range(20)],
+[random.randint(0, 1000) for _ in range(50)],
+[random.randint(0, 1000) for _ in range(75)],
+[random.randint(0, 1000) for _ in range(100)],
+[random.randint(0, 1000) for _ in range(200)],
+]
 
 
 
