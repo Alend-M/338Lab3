@@ -3,6 +3,7 @@
 import timeit
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
 import sys
 
 sys.setrecursionlimit(20000)
@@ -24,7 +25,14 @@ for size in test_input_sizes:
     time = timeit.timeit(lambda: quick_sort(array), number = 1)
     times.append(time)
 
+def quadratic_fit(x, a, b, c):
+    return (a*(np.power(x, 2)) + b*x + c)
+
+# Fit the curve to the data
+quad_params, _ = curve_fit(quadratic_fit, test_input_sizes, times)
+
 plt.scatter(test_input_sizes, times)
+plt.plot(test_input_sizes, quadratic_fit(test_input_sizes, *quad_params), 'b--', label="Quadratic Fit")
 plt.xlabel("Size of Array")
 plt.ylabel("Time")
 plt.title("Worst Case Complexity for Quick Sort")
