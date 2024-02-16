@@ -19,52 +19,59 @@ def binary_search_with_configurable_midpoint(arr, target, initial_midpoint):
     
     return -1
 
-def measure_performance(arr, tasks):
-    performance_data = []
+def time_search_task(arr, task):
+    best_time = float('inf')
+    best_midpoint = None
     
-    for target in tasks:
-        midpoints = [target]  # Each task value itself serves as a midpoint
-        best_time = float('inf')
-        best_midpoint = None
-        
-        for midpoint in midpoints:
-            start_time = time.time()
-            result = binary_search_with_configurable_midpoint(arr, target, midpoint)
-            end_time = time.time()
-            elapsed_time = end_time - start_time
-            
-            if elapsed_time < best_time:
-                best_time = elapsed_time
-                best_midpoint = midpoint
-        
-        performance_data.append({'task_value': target, 'best_midpoint': best_midpoint})
-        print(f"Task: {target}, Best Midpoint: {best_midpoint}, Time: {best_time} seconds")
+    midpoints = range(0, len(arr), len(arr) // 1000)
     
-    return performance_data
+    for midpoint in midpoints:
+        start_time = time.time()
+        binary_search_with_configurable_midpoint(arr, task, midpoint)
+        end_time = time.time()
+        search_time = end_time - start_time
+        
+        if search_time < best_time:
+            best_time = search_time
+            best_midpoint = midpoint
+    
+    return best_midpoint, best_time
 
 def plot_scatter(tasks):
     task_values = [task['task_value'] for task in tasks]
     chosen_midpoints = [task['best_midpoint'] for task in tasks]
     plt.scatter(task_values, chosen_midpoints)
     plt.xlabel('Task Values')
-    plt.ylabel('Chosen Midpoints')
-    plt.title('Chosen Midpoints for Each Task')
+    plt.ylabel('Bestn Midpoints')
+    plt.title('Best Midpoints Vs Task')
     plt.show()
 
 if __name__ == "__main__":
     with open('ex7data.json', 'r') as file:
-        data = json.load(file)
-        arr = data  # where arr is an integer array
+        arr = json.load(file)
 
+
+    print("1")
     with open('ex7tasks.json', 'r') as file:
         tasks = json.loads(file.read())
 
-    performance_data = measure_performance(arr, tasks)
-    plot_scatter(performance_data)
+    print("2")
+    best_midpoints = []
+    for task in tasks:
+        best_midpoint, _ = time_search_task(arr, task)
+        best_midpoints.append(best_midpoint)
+    print("3")
+    plt.scatter(tasks, best_midpoints)
+    plt.xlabel('Search Tasks')
+    plt.ylabel('Best Midpoints')
+    plt.title('Best Midpoints vs Search Tasks')
+    plt.show()
 
+#4.) Comment on the graph. Does the choice of initial midpoint appear
+#    to affect performance? Why do you think is that?
+
+'''The graph shows linear correlation between the tasks and midpoints. The choice of
+initial midpoint affects the performance as the algorithm will find the target
+(complete the search task) faster if the midpoint is closer to the tartget. The choice of
+midpoints increase if the task vals increase.'''
     
-# there is a linear relationship between the task values 
-# and the chosen midpoints, it suggests that the choice of midpoint has a consistent 
-# and predictable impact on performance across different tasks, this is because as the task values increase
-# the midpoints will also increase indicating  that the performance of the binary search algorithm 
-# is directly influenced by the task values and the choice of initial midpoint
