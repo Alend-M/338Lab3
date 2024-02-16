@@ -2,7 +2,7 @@ def merge(arr, low, mid, high):
     arrayLengthL = mid - low + 1    
     arrayLengthR = high - mid
 
-    
+    #
     left = [0] * arrayLengthL
     right = [0] * arrayLengthR
 
