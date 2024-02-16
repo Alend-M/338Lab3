@@ -35,7 +35,6 @@ all_arrays = [
 [random.randint(0, 1000) for _ in range(50)],
 [random.randint(0, 1000) for _ in range(75)],
 [random.randint(0, 1000) for _ in range(100)],
-[random.randint(0, 1000) for _ in range(200)],
 ]
 
 
